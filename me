@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>India Runs on FOSS</title>
+<style>
+:root{--bg:#fbf8f3;--surface:#fff;--ink:#1b1a17;--muted:#6b665d;--line:#e6dfd3;--saffron:#e8590c;--green:#1e7a46;--onaccent:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14130f;--surface:#1d1b17;--ink:#f3efe7;--muted:#a39d90;--line:#322f28;--saffron:#ff8a4c;--green:#4cc17f;--onaccent:#14130f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14130f;--surface:#1d1b17;--ink:#f3efe7;--muted:#a39d90;--line:#322f28;--saffron:#ff8a4c;--green:#4cc17f;--onaccent:#14130f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:inherit}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.logo{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:20px;text-decoration:none;display:flex;align-items:center;gap:10px}
+.dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(180deg,var(--saffron) 0 50%,var(--green) 50% 100%)}
+nav{display:flex;gap:4px}
+nav a{padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:15px}
+nav a.on,nav a:hover{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.15;margin:0}
+.hero{padding:72px 0 48px}
+.hero h1{font-size:clamp(40px,8vw,72px);letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--saffron)}
+.lead{font-size:20px;color:var(--muted);max-width:620px;margin:20px 0 28px}
+.btn{display:inline-block;background:var(--saffron);color:var(--onaccent);border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);margin-left:8px}
+.btn.sm{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.6;cursor:default}
+section{padding:36px 0}
+section h2{font-size:30px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card h3{font-size:19px;margin-bottom:6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.num{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--green);color:var(--onaccent);font-weight:700;margin-bottom:10px}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.92em}
+.criteria{padding-left:20px;color:var(--muted)}
+.criteria li{margin:6px 0}
+.page-title{padding:48px 0 8px}
+.page-title h1{font-size:clamp(32px,6vw,48px)}
+form{max-width:620px;display:grid;gap:16px;margin:24px 0 64px}
+label{display:grid;gap:6px;font-weight:600;font-size:15px}
+label small{font-weight:400;color:var(--muted)}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--saffron);outline-offset:1px}
+.check{display:flex;gap:10px;font-weight:400;align-items:flex-start}
+.check input{width:auto;margin-top:5px}
+.msg{padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.msg.ok{border-color:var(--green)}.msg.err{border-color:var(--saffron)}
+.tools{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.tools input{max-width:320px}.tools select{max-width:200px}
+.tag{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 9px;color:var(--muted);margin-bottom:10px}
+.links{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;font-size:14px}
+.links a{color:var(--green);font-weight:600}
+.empty{text-align:center;padding:48px 20px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+.queue{margin-top:40px}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="#home"><span class="dot"></span>India Runs on FOSS</a>
+  <nav>
+    <a href="#home" data-r="home">About</a>
+    <a href="#directory" data-r="directory">Directory</a>
+    <a href="#submit" data-r="submit">Submit your /stack</a>
+  </nav>
+</div></header>
+
+<main id="app"></main>
+
+<footer><div class="wrap">India Runs on FOSS · a community directory of organisations that choose free and open source software.</div></footer>
+
+<script>
+(function(){
+var app=document.getElementById('app');
+var db=null,user=null,orgs=[],queue=[],canReview=false,dbState='loading';
+var SECTORS=['Startup / Tech','Education','Government / Public sector','Non-profit / NGO','Media','Healthcare','Research','Community / Collective','Other'];
+
+function el(tag,attrs,kids){
+  var n=document.createElement(tag);
+  for(var k in (attrs||{})){
+    if(k==='text')n.textContent=attrs[k];
+    else if(k==='class')n.className=attrs[k];
+    else if(k.indexOf('on')===0)n.addEventListener(k.slice(2),attrs[k]);
+    else n.setAttribute(k,attrs[k]);
+  }
+  (kids||[]).forEach(function(c){ if(c)n.appendChild(typeof c==='string'?document.createTextNode(c):c); });
+  return n;
+}
+function safeUrl(u){
+  try{var x=new URL(u);return (x.protocol==='https:'||x.protocol==='http:')?x.href:null}catch(e){return null}
+}
+
+/* ---------- Pages ---------- */
+function home(){
+  var w=el('div',{class:'wrap'});
+  w.appendChild(el('div',{class:'hero'},[
+    el('h1',{},['India runs on ',el('em',{text:'FOSS.'})]),
+    el('p',{class:'lead',text:'A growing directory of Indian organisations that build, teach, report and run on free and open source software, and say so publicly.'}),
+    el('a',{class:'btn',href:'#submit',text:'Submit your /stack'}),
+    el('a',{class:'btn ghost',href:'#directory',text:'Browse the directory'})
+  ]));
+  w.appendChild(el('section',{},[
+    el('h2',{text:'What is India Runs on FOSS?'}),
+    el('p',{class:'lead',text:'IRoF is a community project that makes it easy to see who in India is choosing open tools over proprietary ones. Every organisation we feature publishes a /stack page, an open and honest list of the software it relies on, so others can learn from it, copy it and move to FOSS themselves.'})
+  ]));
+  var steps=[
+    ['Publish a /stack page','Add a page at yourdomain.in/stack listing the tools you use: OS, email, chat, office suite, hosting, analytics, design and more.'],
+    ['Submit it here','Send us your organisation’s details and the link to your /stack page using the form.'],
+    ['Get featured','We review each submission, and approved organisations appear in the public directory.']
+  ];
+  var g=el('div',{class:'grid'});
+  steps.forEach(function(s,i){g.appendChild(el('div',{class:'card'},[el('div',{class:'num',text:String(i+1)}),el('h3',{text:s[0]}),el('p',{text:s[1]})]))});
+  w.appendChild(el('section',{},[el('h2',{text:'How it works'}),g]));
+  var ul=el('ul',{class:'criteria'});
+  ['Your /stack page is public and reachable without a login.','It lists the software you actually use, categories and tools.','FOSS is the primary choice in your stack. Some proprietary tools are fine if they’re the exception, not the rule.','You’re an organisation, collective or company based in or working primarily in India.'].forEach(function(t){ul.appendChild(el('li',{text:t}))});
+  w.appendChild(el('section',{},[el('h2',{text:'What we look for'}),ul,
+    el('p',{},[el('span',{text:'New to the idea? A '}),el('span',{class:'code',text:'/stack'}),el('span',{text:' page is just a plain page on your site, like /about or /contact, that documents your tools.'})])]));
+  w.appendChild(el('section',{},[el('a',{class:'btn',href:'#submit',text:'Add your organisation'})]));
+  return w;
+}
+
+function submitPage(){
+  var w=el('div',{class:'wrap'});
+  w.appendChild(el('div',{class:'page-title'},[el('h1',{text:'Submit your /stack page'}),
+    el('p',{class:'lead',text:'Tell us about your organisation and point us to your /stack page. We review every submission before it appears in the directory.'})]));
+  var status=el('div');
+  var f=el('form',{novalidate:'novalidate'});
+  function field(label,name,type,hint,req,ph){
+    return el('label',{},[el('span',{text:label+(req?' *':'')}),hint?el('small',{text:hint}):null,
+      el('input',{name:name,type:type,placeholder:ph||'',required:req?'required':null})]);
+  }
+  var sector=el('select',{name:'sector'},SECTORS.map(function(s){return el('option',{value:s,text:s})}));
+  var desc=el('textarea',{name:'description',rows:'4',maxlength:'280',placeholder:'What do you do, and what FOSS tools define your stack?'});
+  var agree=el('input',{type:'checkbox',name:'agree'});
+  var btn=el('button',{class:'btn',type:'submit',text:'Submit for review'});
+  [field('Organisation name','name','text','',true,'Acme Collective'),
+   field('Website','website','url','',true,'https://example.in'),
+   field('Link to your /stack page','stack','url','Must be publicly reachable.',true,'https://example.in/stack'),
+   field('City','city','text','',false,'Hyderabad'),
+   el('label',{},[el('span',{text:'Sector'}),sector]),
+   el('label',{},[el('span',{text:'Short description'}),el('small',{text:'Up to 280 characters.'}),desc]),
+   el('label',{class:'check'},[agree,el('span',{text:'I confirm that FOSS is the primary choice in our stack and that our /stack page is accurate.'})]),
+   btn,status].forEach(function(n){f.appendChild(n)});
+
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var d=new FormData(f);
+    var name=(d.get('name')||'').trim(),site=safeUrl((d.get('website')||'').trim()),stack=safeUrl((d.get('stack')||'').trim());
+    function show(cls,t){status.className='msg '+cls;status.textContent=t}
+    if(!name)return show('err','Please enter your organisation’s name.');
+    if(!site)return show('err','Please enter a valid website URL starting with https://');
+    if(!stack)return show('err','Please enter a valid /stack page URL starting with https://');
+    if(!agree.checked)return show('err','Please confirm the statement above to continue.');
+    if(!db)return show('err','Submissions need you to be signed in to claude.ai in this view. Please sign in and try again.');
+    btn.disabled=true;show('','Submitting…');
+    db.collection('submissions').add({
+      name:name,website:site,stack:stack,city:(d.get('city')||'').trim(),sector:d.get('sector'),
+      description:(d.get('description')||'').trim().slice(0,280),
+      submittedAt:Date.now()
+    }).then(function(){
+      f.reset();show('ok','Thank you! Your submission is in the review queue. Once approved, it will appear in the directory.');btn.disabled=false;
+    }).catch(function(err){
+      btn.disabled=false;show('err','We couldn’t save your submission'+(err&&err.code==='not_granted'?' because you don’t have permission to submit from this view.':'. Please try again in a moment.'));
+    });
+  });
+  w.appendChild(f);
+  return w;
+}
+
+var filterText='',filterSector='';
+function card(o){
+  var c=el('div',{class:'card'},[
+    el('span',{class:'tag',text:o.sector+(o.city?' · '+o.city:'')}),
+    el('h3',{text:o.name}),
+    o.description?el('p',{text:o.description}):null
+  ]);
+  var l=el('div',{class:'links'});
+  var s=safeUrl(o.stack),wb=safeUrl(o.website);
+  if(s)l.appendChild(el('a',{href:s,target:'_blank',rel:'noopener noreferrer',text:'/stack ↗'}));
+  if(wb)l.appendChild(el('a',{href:wb,target:'_blank',rel:'noopener noreferrer',text:'Website ↗'}));
+  c.appendChild(l);return c;
+}
+function directoryPage(){
+  var w=el('div',{class:'wrap'});
+  w.appendChild(el('div',{class:'page-title'},[el('h1',{text:'The directory'}),
+    el('p',{class:'lead',text:'Organisations in India that primarily run on free and open source software.'})]));
+  var q=el('input',{type:'search',placeholder:'Search organisations…',value:filterText,'aria-label':'Search'});
+  var sel=el('select',{'aria-label':'Sector'},[el('option',{value:'',text:'All sectors'})].concat(SECTORS.map(function(s){return el('option',{value:s,text:s})})));
+  sel.value=filterSector;
+  var list=el('div');
+  function draw(){
+    list.textContent='';
+    if(dbState==='loading'){list.appendChild(el('div',{class:'empty',text:'Loading…'}));return}
+    if(dbState==='unavailable'){list.appendChild(el('div',{class:'empty',text:'The directory couldn’t be loaded here. Sign in to claude.ai and reload the page.'}));return}
+    var t=filterText.toLowerCase();
+    var shown=orgs.filter(function(o){
+      return (!filterSector||o.sector===filterSector)&&(!t||((o.name||'')+' '+(o.city||'')+' '+(o.description||'')).toLowerCase().indexOf(t)>-1);
+    }).sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
+    if(!shown.length){
+      list.appendChild(el('div',{class:'empty'},[el('p',{text:orgs.length?'No organisations match your search.':'No organisations have been featured yet. Be the first!'}),
+        orgs.length?null:el('a',{class:'btn',href:'#submit',text:'Submit your /stack'})]));return;
+    }
+    list.appendChild(el('p',{class:'lead',style:'font-size:15px;margin:0 0 16px',text:shown.length+(shown.length===1?' organisation':' organisations')}));
+    var g=el('div',{class:'grid'});shown.forEach(function(o){g.appendChild(card(o))});list.appendChild(g);
+  }
+  q.addEventListener('input',function(){filterText=q.value;draw()});
+  sel.addEventListener('change',function(){filterSector=sel.value;draw()});
+  w.appendChild(el('div',{class:'tools'},[q,sel]));
+  w.appendChild(list);draw();
+
+  if(canReview){
+    var qs=el('div',{class:'queue'},[el('h2',{text:'Review queue ('+queue.length+')'}),
+      el('p',{class:'lead',style:'font-size:15px;margin:6px 0',text:'Only you and other editors can see this.'})]);
+    if(!queue.length)qs.appendChild(el('p',{class:'card',text:'Nothing waiting for review.'}));
+    queue.forEach(function(s){
+      var data=Object.assign({},s.data);
+      var row=el('div',{class:'row'},[
+        el('div',{},[el('strong',{text:data.name}),el('div',{style:'font-size:14px;color:var(--muted)',text:(data.sector||'')+(data.city?' · '+data.city:'')}),
+          el('div',{class:'links'},[
+            safeUrl(data.stack)?el('a',{href:safeUrl(data.stack),target:'_blank',rel:'noopener noreferrer',text:'Check /stack ↗'}):null,
+            safeUrl(data.website)?el('a',{href:safeUrl(data.website),target:'_blank',rel:'noopener noreferrer',text:'Website ↗'}):null])]),
+        el('div',{},[
+          el('button',{class:'btn sm',text:'Approve',onclick:function(ev){ev.target.disabled=true;
+            var clean={name:data.name,website:data.website,stack:data.stack,city:data.city||'',sector:data.sector||'Other',description:data.description||'',approvedAt:Date.now()};
+            db.collection('orgs').doc(s.id).set(clean).then(function(){return db.collection('submissions').doc(s.id).delete()}).catch(function(){ev.target.disabled=false})}}),
+          el('button',{class:'btn sm ghost',text:'Reject',onclick:function(ev){ev.target.disabled=true;db.collection('submissions').doc(s.id).delete().catch(function(){ev.target.disabled=false})}})])
+      ]);
+      qs.appendChild(row);
+    });
+    w.appendChild(qs);
+  }
+  return w;
+}
+
+/* ---------- Router ---------- */
+function route(){
+  var r=(location.hash||'#home').slice(1);
+  if(['home','submit','directory'].indexOf(r)<0)r='home';
+  document.querySelectorAll('nav a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-r')===r)});
+  app.textContent='';
+  app.appendChild(r==='submit'?submitPage():r==='directory'?directoryPage():home());
+  window.scrollTo(0,0);
+}
+function refresh(){ if((location.hash||'')==='#directory'){var y=window.scrollY;route();window.scrollTo(0,y)} }
+window.addEventListener('hashchange',route);
+route();
+
+/* ---------- Data ---------- */
+var timer=setTimeout(function(){ if(dbState==='loading'){dbState='unavailable';refresh()} },10000);
+(async function(){
+  try{
+    user=await claude.use('user');
+    canReview=!!(user&&user.canEdit&&user.canEdit());
+    db=await claude.use('db');
+    if(!db){clearTimeout(timer);dbState='unavailable';refresh();return}
+    db.collection('orgs').onSnapshot(function(snap){
+      clearTimeout(timer);dbState='ready';
+      orgs=snap.docs.map(function(d){return d.data()});refresh();
+    },function(){clearTimeout(timer);dbState='unavailable';refresh()});
+    if(canReview){
+      db.collection('submissions').onSnapshot(function(snap){
+        queue=snap.docs.map(function(d){return {id:d.id,data:d.data()}}).sort(function(a,b){return (a.data.submittedAt||0)-(b.data.submittedAt||0)});refresh();
+      },function(){});
+    }
+  }catch(e){clearTimeout(timer);dbState='unavailable';refresh()}
+})();
+})();
+</script>
+</body>
+</html>
